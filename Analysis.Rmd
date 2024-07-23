@@ -1,0 +1,26 @@
+---
+title: "Penguin sizes"
+output: html_document
+date: "2024-07-23"
+---
+
+The data have been sourced from the Palmer penguins package, and saved as a csv. 
+
+```{r}
+library(tidyverse)
+
+data_penguin_sizes <- read_csv("data/penguin_sizes.csv")
+
+fit <- lm(bill_length_mm~species, data = data_penguin_sizes)
+
+ggplot(data_penguin_sizes, aes(species, bill_length_mm, col = species)) +
+  geom_jitter(show.legend = FALSE) + 
+  geom_boxplot(show.legend = FALSE, col="black", fill=NA) + 
+  theme_classic() +
+  labs(
+    title = "Palmer penguins: comparison of bill lengths",
+    x = "Species", y = "Bill legnth (mm")
+
+anova(fit)
+```
+
