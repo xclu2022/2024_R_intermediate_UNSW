@@ -8,6 +8,7 @@
 
 # User-specific files
 .Ruserdata
+.Rdata
 
 # Example code in package build process
 *-Ex.R
@@ -62,3 +63,5 @@ ignore
 # ignore figures and files produced by the code
 outputs
 
+# macOS specific files
+.DS_Store
