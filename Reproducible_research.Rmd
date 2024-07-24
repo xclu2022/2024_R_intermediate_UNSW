@@ -20,7 +20,7 @@ Goal as an open scientist: Be able to reproduce the results at a later time, bet
 
 There are processes to handle sensitive data (keep the science part open but the sensitive parts, private)
 
-## Activity: Identify challenges/problems/barriers for reproducible analyses and collaboration
+# Activity: Identify challenges/problems/barriers for reproducible analyses and collaboration
 
 (see detailed notes in attached file)
 
@@ -39,7 +39,7 @@ Projects
 - a project is a sensible unit of organisation for your work. Usually this is a paper, PhD chapter, or report
 - everything you need for your project is in this folder
 - each project should be an separate github repository
-- Add an Rstudio project file to the project, and use this to open Rstduio in the right folder
+- Add an Rstudio project file to the project, and use this to open Rstudio in the right folder. See https://r4ds.had.co.nz/workflow-projects.html#rstudio-projects
 
 Have predictable folder structure within your projects
 
@@ -88,13 +88,15 @@ In situations where you want to elaborate alongside your code, `.Rmd` (RMarkdown
 
 [RMarkdown](https://rmarkdown.rstudio.com/index.html) allows you to create really beautiful reports, you can even make slides as well. A lot of the fine tuning comes to the header of the `.Rmd`. For example, you can add an author field.
 
-```---
+```
+---
 title: "Penguin sizes"
 output:
   html_document: default
 date: "2024-07-23"
 authors: Daniel Falster, Fonti Kar, Will Cornwell
-```--
+--
+```
 
 Some code will print extra messages e.g `library(tidyverse)`. You can control the behaviour of the output your R chunks `r, message=FALSE}`. Setting `message=FALSE` will turn off the messages that come from your R code. Learn more about the chunk options [here](https://rmarkdown.rstudio.com/lesson-3.html) 
 
@@ -111,9 +113,53 @@ Quarto is really powerful, it allows you to build books, websites, blogs as well
 
 # Reproducible coding
 
+The biggest keys to making your code reproducible are
+
+1. Start with a script that has runs end to end
+2. Vigoroursly maintain this as the project develops!
+
+Sounds easy!
+
+some advice on maintaining the reproducibility include
+
+- removing old or broken code 
+- disabling Rstudio's bad default habit of saving and reloading objects from the working environment (see here on how to do it)
+  - see https://r4ds.had.co.nz/workflow-projects.html#what-is-real
+  - this means you have to rerun your code each time you reopen the project. This quickly uncovers any issues that arise
+  - for most projects, the cost of rerunning the analysis is low
+- as soon as you encounter an issue, fix it! The work to keep your script in full working order is low. The work to upgrade a script that has layers of issues is high.
+
+If you have slow running steps (.e.g more than 1min), you can use an if statement, which only runs the slow code if the file is missing.
+
+```{r}
+
+path_model_outputs <- "outputs/model_runs.rds"
+
+if(!file.exists(path_model_outputs)) {
+  
+  # beware, takes 4 hrs
+  fits <- run_my_models(data)
+  
+  savesRDS(fits, path_model_outputs)
+}
+
+outputs <- readRDS(path_model_outputs)
+```
+
+You can also use the above approach if you have manual steps.
+
+
 # Saving outputs
 
-# Optimising Rstudio setup
+
+# Rendering reports
+
+You can also automate the running of Rmd files, to generate outputs
+
+```{r}
+rmarkdown::render("Analysis.Rmd", output_file = "outputs/Analysis.html")
+```
+
 
 # R environments
 
