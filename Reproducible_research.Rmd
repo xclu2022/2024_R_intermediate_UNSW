@@ -2,6 +2,8 @@
 title: "Class Notes on Reproducible Research"
 output: html_document
 date: "2024-07-24"
+editor_options: 
+  chunk_output_type: console
 ---
 
 
@@ -36,11 +38,51 @@ There are processes to handle sensitive data (keep the science part open but the
 
 # Data curation and storage
 
+```{r}
+
+```
+
+
+
 # R / Rmd / Qmd
 
 # Reproducible coding
 
 # Saving outputs
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(maps)
+library(ggthemes)
+
+af <- read_csv("data/penguin_distributions/Aptenodytes forsteri.csv")
+
+# Get world map data
+world_map <- map_data("world")
+
+af$countdatapresent<- case_when (af$individualCount>0 ~ "Count data present",
+              .default = "No count data")
+
+#mostly from chagpt:
+# Create a ggplot object
+ggplot(world_map, aes(x = long, y = lat, group = group)) +
+  geom_polygon( color = "white") + # Fill the regions and outline with white
+  scale_fill_viridis_d() + # Use a viridis color scale for regions
+  theme_minimal() + # Apply a minimal theme
+  theme(
+    panel.background = element_rect(fill = "lightblue"), # Light blue background
+    panel.grid.major = element_blank(), # Remove major grid lines
+    panel.grid.minor = element_blank(), # Remove minor grid lines
+    axis.title = element_blank(), # Remove axis titles
+    axis.text = element_blank(), # Remove axis text
+    axis.ticks = element_blank() # Remove the legend
+  ) +
+  coord_fixed(1.3)+
+  geom_point(data=af, aes(x=decimalLongitude,y=decimalLatitude,group=NA,col=countdatapresent))# Ensure the aspect ratio is correct
+
+ggsave("output/emperorpenguindist.pdf",width=5,height=8)
+```
 
 # Optimising Rstudio setup
 
