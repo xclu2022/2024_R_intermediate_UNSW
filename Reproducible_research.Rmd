@@ -36,6 +36,48 @@ There are processes to handle sensitive data (keep the science part open but the
 
 # Organisation
 
+Projects
+
+- a project is a sensible unit of organisation for your work. Usually this is a paper, PhD chapter, or report
+- everything you need for your project is in this folder
+- each project should be an separate github repository
+- Add an Rstudio project file to the project, and use this to open Rstduio in the right folder
+
+Have predictable folder structure within your projects
+
+- ideally align with community practices. 
+- a common folder structure is something like this
+```
+my_porject
+├── my_porject.Rproj      # Rstudio project file
+├── README.md             # a text file with high level summary of the project
+├── analysis.Rmd          # main file running your analysis
+├── data                  # raw data files & metadata
+├── downloads             # data files that are downloaded
+├── docs                  # any documents you're stroing
+├── ignore                # a folder to dump stuff in that is ignored by git
+├── R                     # folder with custom R functions
+├── outputs               # folder for figures or files genearted by your code
+└── scripts               # R scripts 
+```
+
+Within the project, use relative paths in your code
+
+- Avoid absolute pathnames, as these break when the folder is moved within your computer or to your collaborators computer
+
+```{r}
+# Yes!!!! do this
+penguin_sizes <- read.csv("data/penguin_sizes.csv")
+
+# No!!!! Avoid  this
+penguin_sizes <- read.csv("/Users/dfalster/GitHub/projects/2024_R_intermediate_UNSW/data/penguin_sizes.csv")
+```
+
+Include an obvious landing point in your code. 
+
+- i usually add a file called `Analysis.Rmd` in the project root, as an obvious point to go
+- extra details can go in the folder called `README.md`
+
 # Data curation and storage
 
 ```{r}
@@ -45,6 +87,35 @@ There are processes to handle sensitive data (keep the science part open but the
 
 
 # R / Rmd / Qmd
+
+### .R 
+Traditional we have written our R code in `.R` files. These are great, especially for simple analyses or for storing functions (more on these tomorrow!). In `.R` files, we would write our comments using  the hash tag e.g. `# This is a comment`. Lines with `#` at the start will be treated as comments and R won't read those lines as code. Comments are handy when we want to give ourselves/reader a little reminder what is happening at each line but if you want to elaborate or talk about the maths/stats, comments are a bit clunky!
+
+### .Rmd
+In situations where you want to elaborate alongside your code, `.Rmd` (RMarkdown) is a great option! `.Rmd` allows you to embed R code/figures/hyperlinks/tables with regular plain text. Don't worry you can still use comments. Within an `.Rmd`, your R code will live in a code chunk (grey boxes). The great thing about `.Rmd` is that you can knit/render the file into a beautiful output (`.html`/`.docx`/`.pdf`). Check out this [intro](https://rmarkdown.rstudio.com/articles_intro.html).
+
+[RMarkdown](https://rmarkdown.rstudio.com/index.html) allows you to create really beautiful reports, you can even make slides as well. A lot of the fine tuning comes to the header of the `.Rmd`. For example, you can add an author field.
+
+```---
+title: "Penguin sizes"
+output:
+  html_document: default
+date: "2024-07-23"
+authors: Daniel Falster, Fonti Kar, Will Cornwell
+```--
+
+Some code will print extra messages e.g `library(tidyverse)`. You can control the behaviour of the output your R chunks `r, message=FALSE}`. Setting `message=FALSE` will turn off the messages that come from your R code. Learn more about the chunk options [here](https://rmarkdown.rstudio.com/lesson-3.html) 
+
+### .Qmd
+
+Quarto documents (`.Qmd`), is a new age document file type. It is built from `.Rmd`. If you know how to use `.Rmd`, you will know how to use a `.Qmd`. The biggest different is that `.Qmd` allows for cross-language collaborations.  Python and R users can contribute to the same document. 
+
+There is an interactive editor but this is a little buggy
+
+You will need to [download Quarto](https://quarto.org/docs/get-started/) in order to use Quarto docs. 
+
+Quarto is really powerful, it allows you to build books, websites, blogs as well as beautiful rendered reports. 
+
 
 # Reproducible coding
 
@@ -87,5 +158,6 @@ ggsave("output/emperorpenguindist.pdf",width=5,height=8)
 # Optimising Rstudio setup
 
 # R environments
+
 
 
