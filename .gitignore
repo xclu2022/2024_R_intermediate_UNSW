@@ -48,5 +48,8 @@ po/*~
 # RStudio Connect folder
 rsconnect/
 
-#ignore html
+#ignore html/doc
 *.html
+*.docx
+
+
