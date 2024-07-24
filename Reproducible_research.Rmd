@@ -1,0 +1,49 @@
+---
+title: "Class Notes on Reproducible Research"
+output: html_document
+date: "2024-07-24"
+---
+
+
+# What is ideal reproducible research?
+
+- Transparent methods
+- Accessible data and code
+- Can be replicated
+- Interoperable across operating systems and contexts
+
+Historically, science was secretive but there has been a recent push to make science more open.
+
+Many aspects of science can be made transparent, open, replicable. This course is about computation reproducibility.
+
+Goal as an open scientist: Be able to reproduce the results at a later time, better if collaborator can do so, someone from research community.
+
+There are processes to handle sensitive data (keep the science part open but the sensitive parts, private)
+
+## Activity: Identify challenges/problems/barriers for reproducible analyses and collaboration
+
+(see detailed notes in attached file)
+
+- Software environment
+- Workflow
+- Coding conventions
+- Versions
+- Documentation
+- Data management
+- Big data
+
+# Organisation
+
+# Data curation and storage
+
+# R / Rmd / Qmd
+
+# Reproducible coding
+
+# Saving outputs
+
+# Optimising Rstudio setup
+
+# R environments
+
+
