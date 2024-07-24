@@ -24,3 +24,6 @@ ggplot(data_penguin_sizes, aes(species, bill_length_mm, col = species)) +
 anova(fit)
 ```
 
+
+
+
