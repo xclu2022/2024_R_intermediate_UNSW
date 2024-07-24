@@ -48,6 +48,11 @@ po/*~
 # RStudio Connect folder
 rsconnect/
 
+#ignore html/doc
+*.html
+*.docx
+
+
 #ignore generated html files
 *.html
 
@@ -56,3 +61,4 @@ ignore
 
 # ignore figures and files produced by the code
 outputs
+
