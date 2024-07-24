@@ -34,6 +34,48 @@ There are processes to handle sensitive data (keep the science part open but the
 
 # Organisation
 
+Projects
+
+- a project is a sensible unit of organisation for your work. Usually this is a paper, PhD chapter, or report
+- everything you need for your project is in this folder
+- each project should be an separate github repository
+- Add an Rstudio project file to the project, and use this to open Rstduio in the right folder
+
+Have predictable folder structure within your projects
+
+- ideally align with community practices. 
+- a common folder structure is something like this
+```
+my_porject
+├── my_porject.Rproj      # Rstudio project file
+├── README.md             # a text file with high level summary of the project
+├── analysis.Rmd          # main file running your analysis
+├── data                  # raw data files & metadata
+├── downloads             # data files that are downloaded
+├── docs                  # any documents you're stroing
+├── ignore                # a folder to dump stuff in that is ignored by git
+├── R                     # folder with custom R functions
+├── outputs               # folder for figures or files genearted by your code
+└── scripts               # R scripts 
+```
+
+Within the project, use relative paths in your code
+
+- Avoid absolute pathnames, as these break when the folder is moved within your computer or to your collaborators computer
+
+```{r}
+# Yes!!!! do this
+penguin_sizes <- read.csv("data/penguin_sizes.csv")
+
+# No!!!! Avoid  this
+penguin_sizes <- read.csv("/Users/dfalster/GitHub/projects/2024_R_intermediate_UNSW/data/penguin_sizes.csv")
+```
+
+Include an obvious landing point in your code. 
+
+- i usually add a file called `Analysis.Rmd` in the project root, as an obvious point to go
+- extra details can go in the folder called `README.md`
+
 # Data curation and storage
 
 # R / Rmd / Qmd
