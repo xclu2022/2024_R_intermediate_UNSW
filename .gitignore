@@ -53,3 +53,12 @@ rsconnect/
 *.docx
 
 
+#ignore generated html files
+*.html
+
+# a folder to dump stuff in we don't what tracked by git
+ignore
+
+# ignore figures and files produced by the code
+outputs
+
