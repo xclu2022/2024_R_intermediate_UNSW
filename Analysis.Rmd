@@ -8,11 +8,18 @@ authors: Daniel Falster, Fonti Kar, Will Cornwell
 
 The data have been sourced from the Palmer penguins package, and saved as a csv. 
 
+
 ```{r, message=FALSE}
 library(tidyverse)
+```
 
+
+```{r}
 data_penguin_sizes <- read_csv("data/penguin_sizes.csv")
+```
 
+
+```{r}
 fit <- lm(bill_length_mm~species, data = data_penguin_sizes)
 
 ggplot(data_penguin_sizes, aes(species, bill_length_mm, col = species)) +
@@ -26,10 +33,27 @@ ggplot(data_penguin_sizes, aes(species, bill_length_mm, col = species)) +
 anova(fit)
 ```
 
+
 There are `r data_penguin_sizes$species |> unique() |> length()` types of penguins in this dataset.
 
 ```{r}
 data_penguin_sizes$species  |> unique()
+```
+
+# Code environment
+
+```{r}
+sessionInfo()
+```
+
+```{r}
+library(renv)
+
+init()
+```
+
+```{r}
+library(janitor)
 ```
 
 

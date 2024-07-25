@@ -1,0 +1,132 @@
+---
+title: "Writing Functions"
+author: "Fonti Kar"
+date: "2024-07-24"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# A quick explaininer on writing R functions
+
+As researchers we often need to repeat our code operations. This often results in a lot of copy and pasting, making our R scripts/files realllly long. This also creates a problem of having to make changes to all your repeated code if you need to edit one thing. You can see how quickly things can get out of hand....
+
+This is where functions can be useful. You write a function to do your operation!  This not only reduces your copy and paste load, but it also means you only need only change your code in your function **once** if you need to make any changes. 
+
+Here's an example: 
+
+We need to reach each penguin dataset and clean it. I've done it manually for 3 species and already you can see how much copy and pasting that was! 
+
+## Read in af data
+
+```{r}
+af <- read_csv("data/penguin_distributions/Aptenodytes forsteri.csv")
+```
+
+## Clean af data
+
+```{r}
+af |> 
+  select(gbifID:species, individualCount,
+         countryCode, locality, 
+         institutionCode,
+         decimalLongitude, decimalLatitude,
+         eventDate, 
+         coordinateUncertaintyInMeters) |> 
+  filter(individualCount > 1,
+         institutionCode %in% c("CLO", "iNaturalist")
+         )|>
+  arrange(eventDate) |> 
+  clean_names() |> 
+  write_csv("output/af.csv")
+```
+
+## Read in ap data
+
+```{r}
+ap <- read_csv("data/penguin_distributions/Aptenodytes patagonicus.csv")
+```
+
+## Clean ap data
+
+```{r}
+cleaned_ap <- ap |> 
+  select(gbifID:species, individualCount,
+         countryCode, locality, 
+         institutionCode,
+         decimalLongitude, decimalLatitude,
+         eventDate, 
+         coordinateUncertaintyInMeters) |> 
+  filter(individualCount > 1,
+         institutionCode %in% c("CLO", "iNaturalist")
+         )|>
+  arrange(eventDate) |> 
+  clean_names() 
+
+cleaned_ap |> 
+  write_csv("output/ap.csv")
+```
+
+## Read in ec data
+
+```{r}
+ec <- read_csv("data/penguin_distributions/Eudyptes chrysocome.csv")
+```
+
+## Clean ap data
+
+```{r}
+cleaned_ec <- ec |> 
+  select(gbifID:species, individualCount,
+         countryCode, locality, 
+         institutionCode,
+         decimalLongitude, decimalLatitude,
+         eventDate, 
+         coordinateUncertaintyInMeters) |> 
+  filter(individualCount > 1,
+         institutionCode %in% c("CLO", "iNaturalist")
+         )|>
+  arrange(eventDate) |> 
+  clean_names() 
+
+cleaned_ec |> 
+  write_csv("output/ec.csv")
+```
+
+## Function to prep data
+
+So here I've decided that was too much work and I need to write a function. I've called my function `prepare_data_for_plot`. Give your functions a clear, declarative name of what it does. Not `my_function`, something meaningful. 
+
+- To write your function, we use the `function()` function. The inputs you put inside `function()`, are the inputs you will have for your function. Here, my function will take an input `function(data)`. 
+
+- The `{    }` is where you define the body of your function. This is where I've pasted my repeated data cleaning code. 
+
+Notice how I've assigned the output of my cleaning pipe to `cleaned_data` and at the end of my function I've called the `return(cleaned_data)` so that when I call my `prepare_data_for_plot()` it will also print the `cleaned_data` object into the console 
+
+```{r}
+prepare_data_for_plot <- function(data){
+  
+  cleaned_data <- data |> 
+  select(gbifID:species, individualCount, # Selecting specific cols
+         countryCode, locality, 
+         institutionCode,
+         decimalLongitude, decimalLatitude,
+         eventDate, 
+         coordinateUncertaintyInMeters) |> 
+  filter(individualCount > 1, # Exclude records with less 1 individual count
+         institutionCode %in% c("CLO", "iNaturalist")
+         )|>
+  arrange(eventDate) |>  # Sort by date
+  clean_names()  # clean colname names
+
+  return(cleaned_data)
+  
+}
+
+cleaned_af <- prepare_data_for_plot(af)
+prepare_data_for_plot(ap)
+prepare_data_for_plot(ec)
+
+```
